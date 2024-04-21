@@ -1,25 +1,30 @@
 pipeline {
     agent any
 
-    tools {
-        // Install the Maven version configured as "M3" and add it to the path.
-        maven "mymaven"
+    parameters {
+         string(name:'Env',defaultValue: 'Test', description: 'env to compile ')
     }
-
     stages {
-        stage('Compile') {
-            steps {
-               echo "compiling teh code"
+         stage('compile') {
+             steps {
+                 script{
+                      echo 'Hello World'
+                      echo "compile in env: ${params.Env}"
+                }     
+            } 
+        }    
+         stage('unittest') {
+             steps {
+                 script{
+                      echo 'Unittest-Hello'
+                }
             }
-        }
-        stage('UnitTest') {
+        }    
+        stage('package') {
             steps {
-               echo "Test teh code"
-            }
-        }
-        stage('Package') {
-            steps {
-               echo "Package teh code"
+                script{
+                     echo 'pacakge -hello' 
+                }
             }
         }
     }
